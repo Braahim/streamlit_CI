@@ -17,7 +17,5 @@ def main():
     if submitted:
         st.write("slider", slider_val, "checkbox", checkbox_val)
 
-        st.write("Outside the form")
-
 if __name__ == "__main__":
   main()
