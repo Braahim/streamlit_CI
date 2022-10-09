@@ -16,5 +16,16 @@ def main():
     if st.button("Créer le schéma"):
         st.text(st.session_state.l)
 
+import snowflake.connector 
+
+my_cnx = snowflake.connector.connect(**st.secrets["snowflake"])
+if 'my_cnx' not in st.session_state:
+  my_cur = st.session_state.my_cnx.cursor()
+my_cur.execute("use warehouse pc_rivery_wh")
+#sql = 'create or replace table handled as (select "DATA":"%s"::STRING as %s, "DATA":"%s"::STRING as %s, "DATA":"%s"::STRING as %s, "DATA":"%s"::String as %s,"DATA":"%s"::STRING as %s from test);'
+my_cur.execute('create or replace table handled as (select "DATA":"%s"::STRING as %s, "DATA":"%s"::STRING as %s, "DATA":"%s"::STRING as %s,"DATA":"%s"::String as %s,"DATA":"%s"::STRING as %s from test);'
+,st.session_state.l[0],st.session_state.l[0],st.session_state.l[1],st.session_state.l[1],st.session_state.l[2],st.session_state.l[2],st.session_state.l[3],st.session_state.l[3],st.session_state.l[4],st.session_state.l[4])
+
+
 if __name__ == "__main__":
   main()
